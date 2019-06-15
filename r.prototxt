@@ -1,0 +1,139 @@
+input: "data"
+input_dim: 1
+input_dim: 3
+input_dim: 24
+input_dim: 24
+
+layer {
+  bottom: "data"
+  top: "conv1"
+  name: "conv1"
+  type: "Convolution"
+  convolution_param {
+    num_output: 28
+    kernel_size: 3
+    bias_term: true
+  }
+  param {
+    name: "data"
+  }
+}
+
+layer {
+  bottom: "conv1"
+  top: "prelu1"
+  name: "prelu1"
+  type: "PReLU"
+}
+
+layer {
+  bottom: "prelu1"
+  top: "pool1"
+  name: "pool1"
+  type: "Pooling"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+
+layer {
+  bottom: "pool1"
+  top: "conv2"
+  name: "conv2"
+  type: "Convolution"
+  convolution_param {
+    num_output: 48
+    kernel_size: 3
+    bias_term: true
+  }
+}
+
+layer {
+  bottom: "conv2"
+  top: "prelu2"
+  name: "prelu2"
+  type: "PReLU"
+}
+
+layer {
+  bottom: "prelu2"
+  top: "pool2"
+  name: "pool2"
+  type: "Pooling"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+
+layer {
+  bottom: "pool2"
+  top: "conv3"
+  name: "conv3"
+  type: "Convolution"
+  convolution_param {
+    num_output: 64
+    kernel_size: 2
+    bias_term: true
+  }
+}
+
+layer {
+  bottom: "conv3"
+  top: "prelu3"
+  name: "prelu3"
+  type: "PReLU"
+}
+
+layer {
+  bottom: "prelu3"
+  top: "fc1"
+  name: "fc1"
+  type: "InnerProduct"
+  inner_product_param {
+    num_output: 128
+  }
+}
+
+layer {
+  bottom: "fc1"
+  top: "prelu4"
+  name: "prelu4"
+  type: "PReLU"
+}
+
+layer {
+  bottom: "prelu4"
+  top: "fc2"
+  name: "fc2"
+  type: "InnerProduct"
+  inner_product_param {
+    num_output: 2
+  }
+}
+
+layer {
+  bottom: "fc2"
+  top: "prob"
+  name: "prob"
+  type: "Softmax"
+  softmax_param: {
+    axis: 1
+  }
+}
+
+
+
+layer {
+  bottom: "prelu4"
+  top: "fc3"
+  name: "fc3"
+  type: "InnerProduct"
+  inner_product_param {
+    num_output: 4
+  }
+}
+
